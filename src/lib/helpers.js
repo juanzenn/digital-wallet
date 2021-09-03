@@ -11,11 +11,11 @@ class Transaction {
 }
 
 export function createId() {
-  const letters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const letters = '0123456789';
 
   let id = '';
-  for (let i = 0; i < 7; i++) {
-    id += letters[Math.floor(Math.random() * (36 - 0) + 0)];
+  for (let i = 0; i < 8; i++) {
+    id += letters[Math.floor(Math.random() * 10)];
   }
 
   return id;

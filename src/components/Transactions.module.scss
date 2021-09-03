@@ -7,6 +7,10 @@
   text-align: left;
 }
 
+.wrapper::-webkit-scrollbar {
+  display: none;
+}
+
 .table {
   overflow: hidden;
   width: 100%;

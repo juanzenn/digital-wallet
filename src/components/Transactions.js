@@ -1,7 +1,5 @@
 // @ts-check
 import styles from './Transactions.module.scss';
-
-import { capitalize } from '../lib/helpers';
 export default function Transactions({ transactions }) {
   if (transactions.length <= 0) {
     return (
