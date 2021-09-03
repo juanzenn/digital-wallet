@@ -1,70 +1,70 @@
-# Getting Started with Create React App
+# Desarrollo
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Para utilizar esta aplicación en su local environment, siga los siguientes pasos:
 
-## Available Scripts
+1. Clonar esta repo 
 
-In the project directory, you can run:
+```
+git clone https://github.com/juanzenn/digital-wallet
+```
 
-### `yarn start`
+2. Instalar
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```
+cd digital-wallet
+yarn 
+```
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+3. Empezar el servidor de desarrollo
 
-### `yarn test`
+```
+yarn start
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# Digital Wallet
 
-### `yarn build`
+Para este challenge necesitamos dos funciones principales: 
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Añadir dinero de la cuenta
+- Retirar dinero de la cuenta
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Detalles de la aplicación
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- La cuenta es un **estado global**, cuenta el dinero que tiene un usuario.
+- Añadir y retirar son **métodos** que se aplican directamente al la cuenta.
+- Debemos llevar un registro de todos los **movimientos de la cuenta**. En este caso con las siguiente caraterísticas:
+    - ID
+    - Fecha del movimiento
+    - Tipo de movimiento
+    - Cantidad del movimiento
 
-### `yarn eject`
+## Stack
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- React
+- SASS
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Detalles de las funcionalidades
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- Se creará una **SPA** con una única view. Dicha view (Index o Inicio) mostrará la cuenta del usuario, las transacciones, el total de la cuenta y permitirá abrir la ventana de operaciones.
+    - Dicha **ventana de operaciones** permitiría al usuario **añadir** o **retirar** dinero.
+    - Estas operaciones se podrán hacer mediante un cómodo **form** interactivo.
+- Se podrá añadir **dinero infinitamente**. No hay ningún límite.
+- En caso de que un usuario quiera retirar dinero que **no posee** en su cuenta, la operación generará un error.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### State Management
 
-## Learn More
+La aplicación cuenta con dos estados principales: **dinero del cliente** y **las transacciones del mismo.** Ambos estados serán controlados por el componente principal (Wallet.js). Este component contendrá dos children, Transactions.js y Operations.js.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+1. Transactions.js será una tabla que contabilice todos los movimientos del cliente. Recibirá como props el estado **transactions.** 
+2. Operations.js será el ***modal*** con la interfáz necesaría para llevar a cabo las transacciones del usuario. Recibirá como props los métodos addFundsHandle() y whitdrawFundsHandle(). 
+    1. Operations.js tendrá un estado interno, llamado **transactionType,** que controla cuál tipo de transacción se está haciendo. 
+    2. A su vez, Operations.js tendrá como children un menú interactivo para cambiar de modo (agregar o retirar) y un form que cambia según qué operación escogió el usuario. 
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### User workflow
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+1. El usuario entra en la aplicación, se mostrarán las transacciones (ninguna por defecto) y su saldo actual ($0 por defecto).
+2. El usuario hace click en "Registrar", esto abre **Operations.js.**
+3. El usuario escoge qué tipo de transacción quiere efectuar (agregar por defecto). 
+4. El usuario llena el form, hace click en "Añadir fondos" o "Retirar fondos", dependiendo de qué operación se está efectuando. 
+    1. Al añadir fondos, se comprueba que la cantidad sea un número entero. Si esto es correcto, la transacción se completa. Se guarda un ***record*** de la transacción, se cierra el ***modal*** y se actualiza **Wallet.js**. Cualquier error será reflejado en el ***modal*** de **Operations.js.**
+    2. Al retirar fondos, se comprueban dos cosas: que el usuario tenga **dinero mayor que cero** en su cuenta y que la cantidad que desea retirar **sea menor o igual** al de su cuenta. Si ambas cosas son ciertas, se guarda un ***record*** de la transacción, se cierra el modal y se actualiza **Wallet.js**. Cualquier error será reflejado en el ***modal*** de **Operations.js**.
