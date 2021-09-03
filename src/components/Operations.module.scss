@@ -1,0 +1,115 @@
+@import '../styles/mixins.scss';
+@import '../styles/colors.scss';
+
+.wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 100vw;
+  height: 100vh;
+  background: rgba($color: #000000, $alpha: 0.2);
+  @include flex-center-center;
+}
+
+.container {
+  position: relative;
+  background: white;
+  min-width: 50vw;
+
+  padding: 2rem;
+
+  border-radius: 6px;
+  box-shadow: rgba($color: #000000, $alpha: 0.3) 0 0 10px;
+}
+
+.closeButton {
+  position: absolute;
+  top: 0;
+  right: 1rem;
+
+  padding: 1rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+
+  transition: all 200ms linear;
+
+  &:hover {
+    color: $primary-200;
+  }
+}
+
+.navigation {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+
+  text-align: center;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.navigationItemActive,
+.navigationItem {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.navigationItem {
+  color: $gray-600;
+  background-color: $gray-300;
+
+  transition: all 200ms linear;
+
+  &:hover {
+    color: $gray-100;
+    background-color: $primary-500;
+  }
+}
+
+.navigationItemActive {
+  color: $gray-100;
+  background-color: $primary-500;
+}
+
+.title {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  margin-bottom: 0.5rem;
+}
+
+.input {
+  width: 100%;
+  padding: 1rem 2rem;
+  margin-bottom: 0.5rem;
+
+  border: $gray-400 solid 1px;
+  border-radius: 4px;
+
+  &:hover {
+    border: $primary-500 solid 1px;
+  }
+
+  &:focus {
+    border: transparent solid 1px;
+    box-shadow: 0 0 0 4px $primary-100;
+  }
+}
+
+.submitContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.error {
+  margin-bottom: 0.4rem;
+  color: $error;
+  font-size: 0.8rem;
+  margin-bottom: 1.5rem;
+}

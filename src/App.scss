@@ -1,0 +1,103 @@
+@import 'styles/colors.scss';
+@import 'styles/mixins.scss';
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+
+  font-family: sans-serif;
+  color: $gray-800;
+
+  height: 100vh;
+  width: 100vw;
+  @include flex-center-center;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  padding: 0;
+  color: $black;
+}
+
+p {
+  margin: 0;
+  padding: 0;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: transparent;
+
+  padding: 0;
+  margin: 0;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+input {
+  border: none;
+  background: transparent;
+
+  &:focus {
+    outline: none;
+    border: none;
+  }
+}
+
+.button {
+  padding: 0.5rem 1.5rem;
+  background: $primary-500;
+  color: $gray-100;
+
+  font-size: 1.2rem;
+  border-radius: 6px;
+
+  transition: all 200ms linear;
+
+  &:hover {
+    background: $primary-400;
+  }
+
+  &:focus {
+    box-shadow: 0px 0px 0px 2px $primary-100;
+  }
+}
+
+.button--register {
+  margin-top: 1rem;
+  width: 100%;
+}
+
+.main-container {
+  padding: 3em;
+
+  h1 {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    font-size: 1em;
+    margin-bottom: 2em;
+  }
+}
+
+.funds-container {
+  padding: 1rem;
+  margin-bottom: 2rem;
+
+  border-radius: 4px;
+  background: $gray-200;
+  box-shadow: 0px 3px 5px rgba($color: #000000, $alpha: 0.2);
+}

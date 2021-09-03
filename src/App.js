@@ -5,36 +5,23 @@ import Transactions from './components/Transactions';
 import Operations from './components/Operations';
 import { getTotalBalance, generateTransaction } from './lib/helpers';
 
+import './App.scss';
+
 function App() {
   const [modalActive, setModalActive] = React.useState(false);
   const [balance, setBalance] = React.useState(0);
   const [transactions, setTransactions] = React.useState([]);
-  const [transactionError, setTransactionError] = React.useState('');
 
   function addFunds(quantity) {
     const transaction = generateTransaction('add', quantity);
     setTransactions(prev => [...prev, transaction]);
+    setModalActive(false);
   }
 
   function withdrawFunds(quantity) {
-    setTransactionError('');
-
-    if (balance <= 0) {
-      setTransactionError(
-        'Usted necesita tener un balance en su cuenta para retirar fondos.'
-      );
-      return;
-    }
-
-    if (balance < quantity) {
-      setTransactionError(
-        `Los fondos que intenta retirar son mayores a su balance actual. Su balance es $${balance}`
-      );
-      return;
-    }
-
     const transaction = generateTransaction('withdraw', quantity);
     setTransactions(prev => [...prev, transaction]);
+    setModalActive(false);
   }
 
   React.useEffect(() => {
@@ -42,14 +29,15 @@ function App() {
   }, [transactions]);
 
   return (
-    <main>
+    <main className='main-container'>
       <h1>Bienvenido a digital-wallet</h1>
       <p>La mejor manera de guardar tu dinero online</p>
 
-      <section>
+      <section className='funds-container'>
         <Wallet balance={balance} />
 
         <button
+          className='button button--register'
           onClick={() => {
             setModalActive(true);
           }}>
@@ -64,7 +52,7 @@ function App() {
           closeModal={() => setModalActive(false)}
           addFunds={addFunds}
           withdrawFunds={withdrawFunds}
-          error={transactionError}
+          balance={balance}
         />
       ) : null}
     </main>
